@@ -1,0 +1,6 @@
+.claude/
+midi2usbhost/
+tinyusb/
+
+# original uncompressed hand-board photos (site uses the -web.jpg versions)
+assets/hand-board/hand-0[1-8].png

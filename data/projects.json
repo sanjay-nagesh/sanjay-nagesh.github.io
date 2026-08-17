@@ -1,0 +1,53 @@
+[
+  {
+    "title": "Husky Robotics — Hand Board",
+    "summary": "Wrote bare-metal C on STM32G4 to control a robotic hand — stepper motors, solenoids, lasers, and a custom FDCAN communication stack with real-time fault recovery.",
+    "details": "The hand board is the brain of the robotic end-effector on Husky Robotics’ rover. The goal: give the rover a hand that can grip, actuate, and sense — reliably, over a noisy CAN bus, in the middle of a competition.\n\nHow it all works together:\nThe STM32G4 sits at the center, coordinating stepper motors (via DRV8825 drivers), solenoids, linear actuators, and a laser — all running concurrently. Each subsystem talks to the MCU over GPIO, PWM, or SPI, while the board itself communicates upstream to the rover’s main computer over FDCAN.\n\nChallenges:\n• Motor noise coupling into signal lines caused phantom GPIO triggers during high-current stepper steps. Fixed by adding snubber logic in firmware and tightening PCB ground planes.\n• FDCAN synchronization was tricky — getting heartbeat timing right so the E-STOP would trigger fast enough under fault but not false-fire during normal latency spikes took a lot of oscilloscope time.\n• The DRV8825 has no built-in position feedback — so I built a real-time step counter with interrupt-driven limit switch callbacks to give the system axis homing and bounds checking.\n• Laser PWM flicker at low duty cycles was visible and unacceptable. Switching from 8-bit to 10-bit TIM2 resolution fixed it — but required recalculating all prescaler values and retesting the full intensity range.\n• Coordinating solenoids, steppers, and actuators in a single control loop without blocking — everything had to be non-blocking so FDCAN messages were never missed.\n\nWhat I learned:\nWriting bare-metal firmware forces you to understand the hardware completely. There’s no RTOS scheduler to hide behind — if your timing is off by a few microseconds, the motor stutters or the E-STOP misfires. It taught me to think in terms of hardware states, not just software logic.",
+    "tech": "C, STM32G474, FDCAN, PWM, DRV8825, Stepper Motors",
+    "link": "https://www.youtube.com/watch?v=PJVO7Ae7_4M&t=1s",
+    "images": [
+      "assets/hand-board/hand-05-web.jpg",
+      "assets/hand-board/hand-06-web.jpg",
+      "assets/hand-board/hand-01-web.jpg",
+      "assets/hand-board/hand-08-web.jpg",
+      "assets/hand-board/hand-07-web.jpg",
+      "assets/hand-board/hand-04-web.jpg",
+      "assets/hand-board/hand-03-web.jpg",
+      "assets/hand-board/hand-02-web.jpg"
+    ],
+    "linkText": "View How the Rover Works"
+  },
+  {
+    "title": "GPS-Navigating Mecanum Rover",
+    "summary": "Built an autonomous holonomic rover on RP2040 — custom UART/I2C drivers for GPS and IMU, mecanum kinematics for four-motor control, and HIL test infrastructure.",
+    "details": "This project started as a question: could a rover navigate to a GPS waypoint on its own, with a MCU cheap enough to hand to a whole club of students? I built it around an RP2040, writing everything in bare-metal C from the ground up — no off-the-shelf robotics stack to lean on.\n\nThe rover reads its position from a NEO-6M GPS module and its orientation from a BNO055 IMU, both over custom UART and I2C drivers I wrote myself since nothing off-the-shelf fit the timing I needed. Getting those two sensors talking cleanly to the RP2040 took a fair amount of trial and error — GPS fixes come in slow and noisy, so the firmware has to fuse that with the IMU's faster, drift-prone heading data to get something the drive loop can actually trust.\n\nDrive itself is mecanum — four wheels, each independently PWM-controlled, which means the rover can strafe sideways or spin in place instead of just turning like a car. I worked out the kinematic equations by hand so I actually understood why a given wheel-speed combination produced a given motion, rather than copying a formula I didn't trust.\n\nBefore I ever let it loose outdoors, I built out hardware-in-the-loop test infrastructure so I could validate the controller against simulated sensor input first — cheaper than crashing a real rover into a wall to find a bug. Once it worked, the whole thing became a teaching platform: I documented the flashing and validation process well enough that a 30-member club could pick it up and build on it themselves.",
+    "tech": "C, RP2040, UART, I2C, NEO-6M GPS, BNO055 IMU",
+    "link": "https://github.com/sanjay-nagesh",
+    "images": []
+  },
+  {
+    "title": "Vaakya — Wearable Real-Time Captioning",
+    "summary": "HIPAA-compliant offline captioning on Raspberry Pi — zero cloud, sub-second inference, 60 FPS output to a head-mounted display.",
+    "details": "Vaakya came out of a simple frustration: most real-time captioning tools ship your conversation to the cloud, which is a non-starter if you're trying to build something a deaf or hard-of-hearing person can actually trust in a doctor's office or a private conversation. So I set out to build one that never leaves the device.\n\nIt runs entirely on a Raspberry Pi, with Vosk doing the speech-to-text work on-device — no network call, no server round-trip, nothing to intercept. That constraint is also what made it hard: getting sub-second captions out of a Pi meant I couldn't afford a single slow, blocking pipeline, so I split the system into a dual-threaded pipeline where audio capture and inference run concurrently instead of waiting on each other.\n\nThe captions get pushed out to a Vufine head-mounted display at 60 FPS, so the text feels like it's keeping pace with the conversation rather than lagging a beat behind it — which matters a lot for something meant to be worn and used in real time. I packaged the whole thing with Docker so the setup is reproducible on a fresh Pi instead of being a pile of manual steps, and because it never touches the network, it's HIPAA-compliant by construction rather than by policy.",
+    "tech": "Python, Vosk STT, Raspberry Pi, Docker",
+    "link": "https://github.com/sanjay-nagesh",
+    "images": []
+  },
+  {
+    "title": "Embassy — STM32 HAL Fixes",
+    "summary": "Two merged fixes in embassy-rs's STM32 HAL: an I2C slave-mode NVIC hang and a flash bounds-check bug on chips with non-contiguous flash banks.",
+    "details": "I contribute to embassy-rs/embassy, the async embedded framework a lot of the Rust embedded community builds on, and two bugs I chased down there turned into merged fixes.\n\nThe first was an I2C slave-mode hang that only showed up in blocking mode. It turned out new_inner() was unconditionally unmasking the I2C event and error NVIC interrupts, even when the caller used new_blocking() and never bound a handler at all. Blocking mode is supposed to just poll the ADDR flag directly, so it doesn't need an interrupt — but because that flag was left uncleared after a real address match, the match fell straight into the default, unbound interrupt handler and the slave simply never came back. I traced it back to the constructor logic and moved the interrupt-enabling call into only the constructors that actually bind a handler. While I was in there I also noticed listen() and blocking_listen() were setting the ADDRIE bit without any protection, racing against the interrupt handler that clears it — so I closed that race too.\n\nThe second bug was subtler and chip-specific: flash erase, read, and write on the STM32G473CB. That chip has a gap between its two flash banks — Bank2 starts at an address offset well beyond what FLASH_SIZE reports, because FLASH_SIZE is just the sum of the two banks' sizes, not the true addressable span. That meant perfectly valid Bank2 addresses were getting rejected with a size error, even though the lower-level erase() function could reach them just fine. Once I understood the chip's memory map was the actual culprit — not the erase logic — the fix was to bound offset checks by the real addressable span instead of FLASH_SIZE.",
+    "tech": "Rust, embassy-stm32, I2C, NVIC, Flash/PAC",
+    "link": "https://github.com/embassy-rs/embassy/pull/6751",
+    "linkText": "View PR #6751",
+    "images": []
+  },
+  {
+    "title": "Microsoft CFU Protocol — Rust Firmware",
+    "summary": "Contributed production Rust firmware to a Microsoft-affiliated open-source project — refactored the CFU protocol, merging PRs that simplified shared service logic.",
+    "details": "I contribute to the Open Device Partnership, a Microsoft-affiliated open-source project, working in production Rust firmware on the Component Firmware Update (CFU) protocol — the service responsible for safely getting firmware updates onto a device.\n\nWhen I first read through the CFU service code, the Buffer and Splitter components had grown their own near-duplicate versions of the same logic, which made the service harder to reason about and easier to break with a change in one place that didn't get mirrored in the other. I refactored that shared logic into one consolidated path, and cleaned up naming throughout the service so the code reads closer to what it actually does. Those changes got merged upstream, which was a good reminder that a lot of firmware work isn't glamorous — it's making the next person's read of the code faster than yours was.",
+    "tech": "Rust, Embedded Firmware, CFU Protocol",
+    "link": "https://github.com/sanjay-nagesh",
+    "images": []
+  }
+]
