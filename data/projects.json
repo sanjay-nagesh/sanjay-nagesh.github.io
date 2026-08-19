@@ -30,14 +30,6 @@
     ]
   },
   {
-    "title": "GPS-Navigating Mecanum Rover",
-    "summary": "Building an autonomous holonomic rover on RP2040 with custom GPS/IMU drivers and mecanum drive control, currently in testing ahead of a club-wide rollout.",
-    "details": "The project started with a practical question: how do we test controls without breaking real hardware every time something is wrong? I built a testing rover around an RP2040, which is cheap, so making mistakes on it won't make us lose our minimal budget.\n\nThe rover gets its position from a NEO-6M GPS module and its heading from a BNO055 IMU. I wrote custom UART and I2C drivers for both since we didn't have the budget to buy something off-the-shelf. GPS updates are slow and noisy, so the firmware combines that with the IMU's faster heading data to get more reliable data.\n\nThe rover has four wheels, and each wheel has its own motor, so it can strafe sideways or spin in place. I worked out the kinematic math by hand so I'd actually understand why a given wheel-speed combo produces a given motion.\n\nThis project is currently in its testing phase and will be deployed before the end of the quarter so new club members can use it.",
-    "tech": "C, RP2040, UART, I2C, NEO-6M GPS, BNO055 IMU",
-    "link": "https://github.com/sanjay-nagesh",
-    "images": []
-  },
-  {
     "title": "Embassy — STM32 HAL Fixes",
     "summary": "Diagnosed and fixed a flash erase bug and a related bounds-check bug on chips with non-contiguous flash banks, and root-caused an I2C slave NVIC interrupt hang from a community bug report.",
     "details": "I contribute to embassy-rs, which is an async firmware framework a lot of the Rust embedded community uses. I found and fixed three bugs there that got merged.\n\nThe first was a flash erase bug on the STM32G473CB. That chip has a gap between Bank1 and Bank2, and the erase code didn't account for that gap, so it broke on those chips. I fixed the page indexing so it accounts for the gap, and added a check so the driver fails right away if the flash bank setup doesn't match the chip, instead of quietly doing the wrong thing.\n\nWhile fixing that I found a second bug in the same area: the bounds check was rejecting valid Bank2 addresses on those same chips, because it checked offsets against total flash size instead of the actual address range. I fixed that too.\n\nThe third one came from someone else's bug report about an I2C slave hanging. I traced it to an interrupt handler that stayed enabled even when nothing was bound to handle it, so when a real interrupt fired it had nowhere to go and the whole thing hung. I fixed the code so blocking mode doesn't turn on interrupts it isn't using, and fixed a separate race condition I found in the same code while I was in there.",
@@ -59,6 +51,16 @@
     "summary": "Assembled a dual motor electric skateboard with brushless DC hub motors, a VESC motor controller, and a 10S3P lithium ion battery pack (36V, 7.8Ah).",
     "details": "",
     "tech": "VESC, BLDC Motors, Battery Systems",
+    "link": "https://github.com/sanjay-nagesh",
+    "images": [
+      "assets/skateboard/skateboard-01.png"
+    ]
+  },
+  {
+    "title": "GPS-Navigating Mecanum Rover",
+    "summary": "Building an autonomous holonomic rover on RP2040 with custom GPS/IMU drivers and mecanum drive control, currently in testing ahead of a club-wide rollout.",
+    "details": "The project started with a practical question: how do we test controls without breaking real hardware every time something is wrong? I built a testing rover around an RP2040, which is cheap, so making mistakes on it won't make us lose our minimal budget.\n\nThe rover gets its position from a NEO-6M GPS module and its heading from a BNO055 IMU. I wrote custom UART and I2C drivers for both since we didn't have the budget to buy something off-the-shelf. GPS updates are slow and noisy, so the firmware combines that with the IMU's faster heading data to get more reliable data.\n\nThe rover has four wheels, and each wheel has its own motor, so it can strafe sideways or spin in place. I worked out the kinematic math by hand so I'd actually understand why a given wheel-speed combo produces a given motion.\n\nThis project is currently in its testing phase and will be deployed before the end of the quarter so new club members can use it.",
+    "tech": "C, RP2040, UART, I2C, NEO-6M GPS, BNO055 IMU",
     "link": "https://github.com/sanjay-nagesh",
     "images": []
   }
