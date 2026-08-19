@@ -75,7 +75,7 @@ h2::before{content:"";width:10px;height:10px;background:var(--accent-2);flex-shr
 h3{font-size:1.05rem;font-weight:700}
 
 /* PROJECT LIST */
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:14px}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin-top:14px}
 .project-card{
   display:flex;flex-direction:column;
   border:1px solid var(--border);border-radius:6px;overflow:hidden;
@@ -84,10 +84,10 @@ h3{font-size:1.05rem;font-weight:700}
   transition:border-color .15s,background .15s;
 }
 .card-thumb{
-  width:100%;aspect-ratio:16/10;flex-shrink:0;overflow:hidden;
+  width:100%;aspect-ratio:4/3;flex-shrink:0;overflow:hidden;
   border-bottom:1px solid var(--border);background:#111;
 }
-.card-thumb img{width:100%;height:100%;object-fit:contain;display:block;transition:opacity .3s ease}
+.card-thumb img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:opacity .3s ease}
 .project-card:hover{border-left-color:var(--accent);border-color:var(--accent);background:var(--hover)}
 .project-card:hover .card-body h5{color:var(--accent)}
 .card-body{padding:14px 16px;display:flex;flex-direction:column;flex:1}
@@ -115,7 +115,7 @@ h3{font-size:1.05rem;font-weight:700}
   cursor:pointer;z-index:1;display:flex;align-items:center;justify-content:center;
 }
 .modal-close:hover{background:var(--hover)}
-.modal-slideshow{width:100%;aspect-ratio:16/9;background:#111;position:relative;overflow:hidden}
+.modal-slideshow{width:100%;aspect-ratio:4/3;background:#111;position:relative;overflow:hidden}
 .modal-body{padding:22px 24px 26px}
 .modal-title{font-size:1.3rem;font-weight:600;margin:0 0 14px}
 .modal-details p{margin:0 0 10px;line-height:1.7;color:var(--fg);font-size:0.96rem}
@@ -126,7 +126,7 @@ h3{font-size:1.05rem;font-weight:700}
 
 /* SLIDESHOW (used inside modal) */
 .ss-track{width:100%;height:100%;position:relative}
-.ss-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .4s ease}
+.ss-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition:opacity .4s ease}
 .ss-slide.active{opacity:1}
 .ss-btn{
   position:absolute;top:50%;transform:translateY(-50%);
