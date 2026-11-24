@@ -1,6 +1,6 @@
 [
   {
-    "title": "Husky Robotics — Hand Board",
+    "title": "Husky Robotics: Hand Board",
     "spec": "STM32G474 · FDCAN · PWM · C",
     "summary": "Wrote bare-metal C on STM32G4 to control a robotic hand on the rover with stepper motors, solenoids, and a laser, coordinated over the rover's FDCAN bus.",
     "details": "The hand board is the firmware for the gripper on Husky Robotics' rover. It has to control a stepper motor, some solenoids, and a laser, and it has to talk reliably to the rest of the rover over CAN.\n\nHow it works together:\nAn STM32G4 chip runs everything. It drives the stepper motor through a DRV8825 driver, controls the solenoids, and controls the laser's brightness with PWM. It also sends and receives CAN messages to the rover's main computer (NVIDIA Jetson).\n\nChallenges I faced:\n• Motor noise was causing false signals on other pins when the stepper drew high current. I fixed this by adding filtering in firmware and cleaning up the ground layout on the board.\n• The DRV8825 doesn't report the motor's position, so I wrote code to count steps in real time and added limit switches (with interrupts) so the arm knows when it's hit its physical limits.\n• The laser flickered at low brightness. I found this was a PWM resolution problem and fixed it by switching from 8-bit to 10-bit timer resolution, which meant recalculating the timer settings and retesting brightness levels.\n• I made sure my code never blocked for too long, since a teammate's CAN heartbeat and emergency-stop logic depended on messages going out on time.",
@@ -19,7 +19,7 @@
     ]
   },
   {
-    "title": "Delta — Version Control for Hardware",
+    "title": "Delta: Version Control for Hardware",
     "spec": "Jetson Orin Nano · Camera · Vision-Language Model",
     "summary": "Git for hardware: an overhead camera on a Jetson Orin Nano tracks changes on a workbench and stores them as diffs you can rewind and search in plain English. 2nd place, Perceptron AI Perception track at DubHacks 2026.",
     "details": "Delta is \"Git for hardware,\" built by a team of four at DubHacks 2026. I worked on the electronics and integration.\n\nAn overhead camera watches the workbench. A vision-language model running on a Jetson Orin Nano tracks what changed between snapshots and stores those changes as structured diffs, like commits for a physical prototype.\n\nFrom there you can rewind to an earlier state, ask questions in plain English (\"when did the motor driver get moved?\"), see who made each change, and generate build instructions automatically.\n\nIt won 2nd place in the Perceptron AI Perception track.",
@@ -28,7 +28,7 @@
     "images": []
   },
   {
-    "title": "Vaakya — Wearable Real-Time Captioning",
+    "title": "Vaakya: Wearable Real-Time Captioning",
     "spec": "Raspberry Pi · Vosk STT · Python",
     "summary": "Built the real time captioning pipeline for Vaakya, AI glasses that caption speech for people who are deaf or hard of hearing. Uses an offline speech to text model, runs on two threads to keep it fast, and shows captions on an AR display.",
     "details": "Vaakya is AI glasses that show live captions of what people are saying, built for people who are deaf or hard of hearing. I built the software and the hardware integration for it.\n\nHow it works:\nThe mic picks up audio and puts it in a queue. One thread takes that audio and runs it through Vosk, which is an offline speech to text model, and turns it into text. A second thread runs the display at 60 FPS and shows the captions on the AR display. I split it into two threads so the captions don't stutter, since the display doesn't have to wait on the model to finish.\n\nJust showing whatever the model returns looked bad, since short pieces of text came back fast and looked spammy as separate lines. So I added logic to merge nearby pieces into one caption, and made old captions disappear after a few seconds instead of piling up. I also had to tune the latency differently depending on the hardware, since what worked on a Mac was too fast for a Raspberry Pi.\n\nEverything runs locally, so it doesn't need internet and nothing gets sent anywhere.\n\nWhy I'm building this:\nWhile playing cricket, I met someone who was deaf and wanted to join us, and it was hard to include him. I wanted to build something that actually lets people like him be part of the conversation instead of just watching it happen.\n\nThe project got selected for the Lavin x Anthropic entrepreneurship program, and I got $2K in prototype funding after submitting a funding application to UW's Buerk Center for Entrepreneurship.",
@@ -50,7 +50,7 @@
     "images": []
   },
   {
-    "title": "Embassy — STM32 HAL Fixes",
+    "title": "Embassy: STM32 HAL Fixes",
     "spec": "STM32 · I2C · Flash · Rust",
     "summary": "Diagnosed and fixed a flash erase bug and a related bounds-check bug on chips with non-contiguous flash banks, and root-caused an I2C slave NVIC interrupt hang from a community bug report.",
     "details": "I contribute to embassy-rs, which is an async firmware framework a lot of the Rust embedded community uses. I found and fixed three bugs there that got merged.\n\nThe first was a flash erase bug on the STM32G473CB. That chip has a gap between Bank1 and Bank2, and the erase code didn't account for that gap, so it broke on those chips. I fixed the page indexing so it accounts for the gap, and added a check so the driver fails right away if the flash bank setup doesn't match the chip, instead of quietly doing the wrong thing.\n\nWhile fixing that I found a second bug in the same area: the bounds check was rejecting valid Bank2 addresses on those same chips, because it checked offsets against total flash size instead of the actual address range. I fixed that too.\n\nThe third one came from someone else's bug report about an I2C slave hanging. I traced it to an interrupt handler that stayed enabled even when nothing was bound to handle it, so when a real interrupt fired it had nowhere to go and the whole thing hung. I fixed the code so blocking mode doesn't turn on interrupts it isn't using, and fixed a separate race condition I found in the same code while I was in there.",
@@ -60,7 +60,7 @@
     "images": []
   },
   {
-    "title": "Microsoft CFU Protocol — Rust Firmware",
+    "title": "Microsoft CFU Protocol: Rust Firmware",
     "spec": "CFU Protocol · Firmware · Rust",
     "summary": "Found and fixed a code duplication issue in Microsoft's open-source CFU firmware service, cleaning up response logic shared between the Buffer and Splitter components.",
     "details": "I contributed to the Open Device Partnership, which is a Microsoft-affiliated open-source project. I worked on the CFU protocol, which is the part of the firmware responsible for getting updates safely onto a device.\n\nWhile going through the code, I noticed the Buffer and Splitter components each had their own separate copy of the same validation logic, for rejecting invalid versions and content. Having two copies of the same logic is a problem because if you fix a bug in one copy, nothing forces you to fix it in the other one too, so they can quietly drift apart over time. I moved that shared logic into one common module that both components use, so there's just one version of it instead of two that are supposed to match but don't have to.",
