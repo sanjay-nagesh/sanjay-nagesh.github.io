@@ -4,16 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Sanjay Nagesh — Embedded Systems Portfolio</title>
-    <meta name="description" content="Sanjay Nagesh — Computer Engineering student at the University of Washington building bare-metal embedded firmware in C, C++, and Rust. Husky Robotics, open-source contributor, and builder of AR captioning glasses." />
+    <meta name="description" content="Sanjay Nagesh — Computer Engineering student at the University of Washington building bare-metal embedded firmware in C and Rust. Husky Robotics, open-source contributor, and builder of AR captioning glasses." />
+    <meta name="theme-color" content="#0d1117" />
     <meta property="og:title" content="Sanjay Nagesh — Embedded Systems Portfolio" />
     <meta property="og:description" content="Bare-metal firmware, robotics, and open-source embedded systems work." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="assets/husky-robotics.jpg" />
+    <meta property="og:url" content="https://sanjay-nagesh.github.io/" />
+    <meta property="og:image" content="https://sanjay-nagesh.github.io/assets/husky-robotics.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
@@ -24,10 +26,11 @@
         <nav class="nav" role="navigation" aria-label="Main navigation">
           <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav"><span class="sr-only">Toggle navigation</span>☰</button>
           <div id="main-nav" class="nav-links">
-            <a href="#home">Home</a><span class="sep">|</span>
-            <a href="#about">About</a><span class="sep">|</span>
-            <a href="#projects">Projects</a><span class="sep">|</span>
-            <a href="#experience">Experience</a><span class="sep">|</span>
+            <a href="#about">About</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#awards">Awards</a>
+            <a href="#skills">Skills</a>
             <a href="#contact">Contact</a>
           </div>
         </nav>
@@ -37,104 +40,177 @@
     <main id="main" role="main">
       <section id="home" class="hero">
         <div class="container">
-          <div class="hero-meta">
-            <h1>Sanjay Nagesh</h1>
-            <p class="tagline">Computer Engineering · University of Washington Bothell</p>
-            <p class="lead">Computer Engineering student graduating June 2029, building bare-metal firmware and embedded systems in C, C++, and Rust.</p>
-            <p class="cta-row">
-              <a class="btn" href="#about">About Me</a>
-              <a class="btn" href="#projects">Projects</a>
-              <a class="btn" href="#experience">Experience</a>
-            </p>
-          </div>
+          <h1>Sanjay Nagesh</h1>
+          <svg class="scope" viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path class="scope-trace" d="M0 14 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 h10 V2 h20 V14 h10 " />
+          </svg>
+          <p class="tagline">Computer Engineering · University of Washington Bothell</p>
+          <p class="lead">Computer Engineering student graduating June 2029, building bare-metal firmware and embedded systems in C and Rust.</p>
+          <p class="status"><span class="status-dot" aria-hidden="true"></span>Looking for Summer 2027 embedded and robotics internships.</p>
+          <p class="cta-row">
+            <a class="btn" href="#experience">Experience</a>
+            <a class="btn" href="#projects">Projects</a>
+            <a class="btn" href="#contact">Contact</a>
+          </p>
         </div>
       </section>
 
-      <section id="about" class="container blurb">
-        <h2>About Me</h2>
+      <section id="about" class="container">
+        <h2><span class="sec-num">01</span> // ABOUT</h2>
         <p>Hello, my name is Sanjay and I am a Computer Engineering student at the University of Washington. I'm part of Husky Robotics, where I write firmware for the robot. I also contribute to open source projects and am working on AR glasses for the deaf and hard of hearing.</p>
-        <p style="margin-top:12px">Outside of school and career, I like spending time in nature, drone photography, and pickleball.</p>
-      </section>
-
-      <section id="projects" class="container">
-        <h2>Projects</h2>
-        <div class="projects-grid" id="projects-grid"><!-- projects injected by js --></div>
-      </section>
-
-      <section id="skills" class="container blurb">
-        <h3>Technical Skills</h3>
-        <div class="skills-grid">
-          <div class="skill-group">
-            <h5>Languages</h5>
-            <p>C, Rust, Python, Java</p>
-          </div>
-          <div class="skill-group">
-            <h5>Embedded &amp; Firmware</h5>
-            <p>C (bare-metal), Rust, STM32G4 (G473/G474), RP2040, FDCAN/CAN bus, UART, I2C, PWM, GPIO, DRV8825</p>
-          </div>
-          <div class="skill-group">
-            <h5>Controls &amp; Simulation</h5>
-            <p>MATLAB/Simulink, PID control, hardware-in-the-loop (HIL) testing, mecanum kinematics, IMU sensor fusion</p>
-          </div>
-          <div class="skill-group">
-            <h5>Hardware</h5>
-            <p>Oscilloscope, multimeter, soldering, signal verification</p>
-          </div>
-          <div class="skill-group">
-            <h5>Toolchain</h5>
-            <p>Git, GitHub (upstream PR workflow), Docker</p>
-          </div>
-        </div>
+        <p>Outside of school and career, I'm president of a cricket club, play Carnatic violin, and like spending time in nature, drone photography, and pickleball.</p>
       </section>
 
       <section id="experience" class="container">
-        <h2>Experience</h2>
-
+        <h2><span class="sec-num">02</span> // EXPERIENCE</h2>
         <div class="exp-list">
           <div class="exp-row">
             <img class="exp-logo-img" src="assets/husky-robotics.jpg" alt="Husky Robotics">
             <div class="exp-info">
+              <p class="spec">STM32G4 · FDCAN · C</p>
               <span class="exp-company">Husky Robotics</span>
               <span class="exp-role">Firmware Engineer</span>
+              <span class="exp-date">Sep 2025 – Present</span>
             </div>
-            <span class="exp-date">Sep 2025 – Present</span>
           </div>
 
           <div class="exp-row">
             <img class="exp-logo-img" src="assets/autonomous-flight.png" alt="Autonomous Flight Control">
             <div class="exp-info">
+              <p class="spec">RP2040 · UART/I2C · C</p>
               <span class="exp-company">Autonomous Flight Control</span>
               <span class="exp-role">Embedded Systems Engineer</span>
+              <span class="exp-date">Sep 2025 – Present</span>
             </div>
-            <span class="exp-date">Sep 2025 – Present</span>
           </div>
 
           <div class="exp-row">
             <img class="exp-logo-img" src="assets/microsoft-odp.png" alt="Microsoft Surface / Open Device Partnership">
             <div class="exp-info">
+              <p class="spec">CFU Protocol · Rust</p>
               <span class="exp-company">Microsoft</span>
               <span class="exp-role">OSS Contributor, Open Device Partnership</span>
+              <span class="exp-date">Mar 2026</span>
             </div>
-            <span class="exp-date">Mar 2026</span>
           </div>
 
           <div class="exp-row">
             <img class="exp-logo-img" src="assets/embassy.png" alt="Embassy">
             <div class="exp-info">
+              <p class="spec">STM32 HAL · I2C · Flash · Rust</p>
               <span class="exp-company">Embassy</span>
               <span class="exp-role">OSS Contributor — STM32 HAL (I2C, flash) fixes</span>
+              <span class="exp-date">Mar 2026 · Merged</span>
             </div>
-            <span class="exp-date">Aug 2026</span>
           </div>
         </div>
       </section>
 
-      <section id="contact" class="container blurb">
-        <h2>Contact</h2>
+      <section id="projects" class="container">
+        <h2><span class="sec-num">03</span> // PROJECTS</h2>
+        <div class="projects-grid" id="projects-grid">
+          <article class="project-card" data-index="0" tabindex="0" role="button" aria-label="Open details for Husky Robotics — Hand Board">
+            <div class="card-thumb"><img src="assets/hand-board/hand-05-web.jpg" alt="Husky Robotics — Hand Board" loading="lazy"></div>
+            <div class="card-body">
+              <p class="spec">STM32G474 · FDCAN · PWM · C</p>
+              <h3>Husky Robotics — Hand Board</h3>
+              <p class="muted">Wrote bare-metal C on STM32G4 to control a robotic hand on the rover with stepper motors, solenoids, and a laser, coordinated over the rover&#x27;s FDCAN bus.</p>
+              <span class="card-readmore">Read more →</span>
+            </div>
+          </article>
+          <article class="project-card" data-index="1" tabindex="0" role="button" aria-label="Open details for Delta — Version Control for Hardware">
+            <div class="card-body">
+              <p class="spec">Jetson Orin Nano · Camera · Vision-Language Model</p>
+              <h3>Delta — Version Control for Hardware</h3>
+              <p class="muted">Git for hardware: an overhead camera on a Jetson Orin Nano tracks changes on a workbench and stores them as diffs you can rewind and search in plain English. 2nd place, Perceptron AI Perception track at DubHacks 2026.</p>
+              <span class="card-readmore">Read more →</span>
+            </div>
+          </article>
+          <article class="project-card" data-index="2" tabindex="0" role="button" aria-label="Open details for Vaakya — Wearable Real-Time Captioning">
+            <div class="card-thumb"><img src="assets/vaakya/vaakya-03.jpg" alt="Vaakya — Wearable Real-Time Captioning" loading="lazy"></div>
+            <div class="card-body">
+              <p class="spec">Raspberry Pi · Vosk STT · Python</p>
+              <h3>Vaakya — Wearable Real-Time Captioning</h3>
+              <p class="muted">Built the real time captioning pipeline for Vaakya, AI glasses that caption speech for people who are deaf or hard of hearing. Uses an offline speech to text model, runs on two threads to keep it fast, and shows captions on an AR display.</p>
+              <span class="card-readmore">Read more →</span>
+            </div>
+          </article>
+          <article class="project-card" data-index="3" tabindex="0" role="button" aria-label="Open details for GPS-Navigating Mecanum Rover">
+            <div class="card-body">
+              <p class="spec">RP2040 · GPS/IMU · UART/I2C · C</p>
+              <h3>GPS-Navigating Mecanum Rover</h3>
+              <p class="muted">Building an autonomous holonomic rover on RP2040 with custom GPS/IMU drivers and mecanum drive control, currently in testing ahead of a club-wide rollout.</p>
+              <span class="card-readmore">Read more →</span>
+            </div>
+          </article>
+          <article class="project-card" data-index="4" tabindex="0" role="button" aria-label="Open details for Embassy — STM32 HAL Fixes">
+            <div class="card-body">
+              <p class="spec">STM32 · I2C · Flash · Rust</p>
+              <h3>Embassy — STM32 HAL Fixes</h3>
+              <p class="muted">Diagnosed and fixed a flash erase bug and a related bounds-check bug on chips with non-contiguous flash banks, and root-caused an I2C slave NVIC interrupt hang from a community bug report.</p>
+              <span class="card-readmore">Read more →</span>
+            </div>
+          </article>
+          <article class="project-card" data-index="5" tabindex="0" role="button" aria-label="Open details for Microsoft CFU Protocol — Rust Firmware">
+            <div class="card-body">
+              <p class="spec">CFU Protocol · Firmware · Rust</p>
+              <h3>Microsoft CFU Protocol — Rust Firmware</h3>
+              <p class="muted">Found and fixed a code duplication issue in Microsoft&#x27;s open-source CFU firmware service, cleaning up response logic shared between the Buffer and Splitter components.</p>
+              <span class="card-readmore">Read more →</span>
+            </div>
+          </article>
+          <article class="project-card" data-index="6" tabindex="0" role="button" aria-label="Open details for Electric Skateboard">
+            <div class="card-thumb"><img src="assets/skateboard/skateboard-01.png" alt="Electric Skateboard" loading="lazy"></div>
+            <div class="card-body">
+              <p class="spec">VESC · BLDC · 10S3P Li-ion</p>
+              <h3>Electric Skateboard</h3>
+              <p class="muted">Assembled a dual motor electric skateboard with brushless DC hub motors, a VESC motor controller, and a 10S3P lithium ion battery pack (36V, 7.8Ah).</p>
+              <span class="card-readmore">Read more →</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="awards" class="container">
+        <h2><span class="sec-num">04</span> // AWARDS</h2>
+        <ul class="awards">
+          <li><span class="award-place">1st</span><span class="award-name">Canadian International Rover Challenge (CIRC) 2026, arm task, with Husky Robotics</span></li>
+          <li><span class="award-place">2nd</span><span class="award-name">DubHacks 2026, Perceptron AI Perception track (Delta)</span></li>
+          <li><span class="award-place">Gold</span><span class="award-name">USA Computing Olympiad (USACO)</span></li>
+        </ul>
+      </section>
+
+      <section id="skills" class="container">
+        <h2><span class="sec-num">05</span> // SKILLS</h2>
+        <div class="skills-grid">
+          <div class="skill-group">
+            <h3>Languages</h3>
+            <ul class="tags"><li>C</li><li>Rust</li><li>Python</li><li>Java</li></ul>
+          </div>
+          <div class="skill-group">
+            <h3>Embedded &amp; Firmware</h3>
+            <ul class="tags"><li>C (bare-metal)</li><li>Rust</li><li>STM32G4 (G473/G474)</li><li>RP2040</li><li>FDCAN/CAN bus</li><li>UART</li><li>I2C</li><li>PWM</li><li>GPIO</li><li>DRV8825</li></ul>
+          </div>
+          <div class="skill-group">
+            <h3>Controls &amp; Simulation</h3>
+            <ul class="tags"><li>MATLAB/Simulink</li><li>PID control</li><li>hardware-in-the-loop (HIL) testing</li><li>mecanum kinematics</li><li>IMU sensor fusion</li></ul>
+          </div>
+          <div class="skill-group">
+            <h3>Hardware</h3>
+            <ul class="tags"><li>Oscilloscope</li><li>multimeter</li><li>soldering</li><li>signal verification</li></ul>
+          </div>
+          <div class="skill-group">
+            <h3>Toolchain</h3>
+            <ul class="tags"><li>Git</li><li>GitHub (upstream PR workflow)</li><li>Docker</li></ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="container">
+        <h2><span class="sec-num">06</span> // CONTACT</h2>
         <div class="contact-row">
-          <a class="contact-link" href="mailto:sanjaynagesh55@outlook.com">sanjaynagesh55@outlook.com</a><span class="sep">|</span>
-          <a class="contact-link" href="tel:+14254429761">425-442-9761</a><span class="sep">|</span>
-          <a class="contact-link" href="https://linkedin.com/in/sanjaynagesh55/" target="_blank" rel="noopener">LinkedIn</a><span class="sep">|</span>
+          <a class="contact-link" href="mailto:sanjaynagesh55@outlook.com">sanjaynagesh55@outlook.com</a>
+          <a class="contact-link" href="https://linkedin.com/in/sanjaynagesh55/" target="_blank" rel="noopener">LinkedIn</a>
           <a class="contact-link" href="https://github.com/sanjay-nagesh" target="_blank" rel="noopener">GitHub</a>
         </div>
       </section>
