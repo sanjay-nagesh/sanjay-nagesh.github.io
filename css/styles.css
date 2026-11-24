@@ -215,3 +215,7 @@ a:focus-visible,button:focus-visible,.project-card:focus-visible{outline:2px sol
   .scope-trace{animation:none}
   *{transition:none !important}
 }
+
+/* Experience on small screens */
+.exp-logo-img{max-width:100%}
+@media(max-width:600px){.exp-list{grid-template-columns:1fr}}
