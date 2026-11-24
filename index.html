@@ -142,7 +142,7 @@
 
     <footer class="site-footer">
       <div class="container">
-        <small>© <span id="year"></span> Sanjay Nagesh · sanjaynagesh55@outlook.com</small>
+        <small>© <span id="year"></span> Sanjay Nagesh · sanjaynagesh55@outlook.com · This site logs visitor IP addresses.</small>
       </div>
     </footer>
 
@@ -152,5 +152,6 @@
     <script src="js/menu.js"></script>
     <script src="js/site.js"></script>
     <script data-goatcounter="https://sanjaynagesh.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script>fetch("https://visitor-logger.sanjaynagesh05.workers.dev/hit?p="+encodeURIComponent(location.pathname)+"&r="+encodeURIComponent(document.referrer),{keepalive:true}).catch(function(){});</script>
   </body>
 </html>
