@@ -1,4 +1,4 @@
-﻿// ── Modal ────────────────────────────────────────────────────────────────────
+// ── Modal ────────────────────────────────────────────────────────────────────
 function buildModal(){
   const overlay = document.createElement('div');
   overlay.id = 'proj-modal';
@@ -10,6 +10,7 @@ function buildModal(){
       <button class="modal-close" aria-label="Close">&times;</button>
       <div class="modal-slideshow"></div>
       <div class="modal-body">
+        <p class="spec modal-spec"></p>
         <h3 class="modal-title"></h3>
         <div class="modal-details"></div>
         <p class="modal-tech"></p>
@@ -74,6 +75,7 @@ function openModal(p){
   if(p.images && p.images.length) buildSlideshow(p.images, ssEl);
 
   // text
+  overlay.querySelector('.modal-spec').textContent = p.spec || '';
   overlay.querySelector('.modal-title').textContent = p.title;
   const detailsEl = overlay.querySelector('.modal-details');
   detailsEl.innerHTML = '';
@@ -87,7 +89,8 @@ function openModal(p){
       const p2 = document.createElement('p'); p2.textContent = line; detailsEl.appendChild(p2);
     }
   });
-  overlay.querySelector('.modal-tech').innerHTML = '<strong>Tech:</strong> ' + p.tech;
+  const techEl = overlay.querySelector('.modal-tech');
+  techEl.textContent = p.tech;
 
   const linkEl = overlay.querySelector('.modal-link');
   if(p.link && p.link !== '#'){ linkEl.href = p.link; linkEl.textContent = (p.linkText || 'View / Demo') + ' →'; linkEl.style.display=''; }
@@ -99,53 +102,32 @@ function openModal(p){
 }
 
 // ── Cards ────────────────────────────────────────────────────────────────────
-async function loadProjects(){
+// Cards are static HTML in index.html; this only adds the detail modal and
+// thumbnail rotation, so the page still works without JavaScript.
+async function initProjects(){
+  const cards = document.querySelectorAll('.project-card[data-index]');
+  if(!cards.length) return;
+  let projects = [];
   try{
     const res = await fetch('data/projects.json');
     if(!res.ok) throw new Error('HTTP ' + res.status);
-    const projects = await res.json();
-    const container = document.getElementById('projects-grid');
-    container.innerHTML = '';
+    projects = await res.json();
+  } catch(err){ console.error(err); return; }
 
-    projects.forEach(p => {
-      const card = document.createElement('article');
-      card.className = 'project-card';
-      card.setAttribute('tabindex','0');
-      card.setAttribute('role','button');
-      card.setAttribute('aria-label', 'Open details for ' + p.title);
-
-      if(p.images && p.images.length){
-        const thumb = document.createElement('div'); thumb.className = 'card-thumb';
-        const img = document.createElement('img'); img.src = p.images[0]; img.alt = p.title;
-        thumb.appendChild(img);
-        card.appendChild(thumb);
-
-        if(p.images.length > 1){
-          let idx = 0;
-          setInterval(() => {
-            idx = (idx + 1) % p.images.length;
-            img.src = p.images[idx];
-          }, 2200);
-        }
-      }
-
-      const body = document.createElement('div'); body.className='card-body';
-      const title = document.createElement('h5'); title.textContent = p.title;
-      const summary = document.createElement('p'); summary.className='muted'; summary.textContent = p.summary || p.description;
-      const readmore = document.createElement('span'); readmore.className='card-readmore'; readmore.textContent = 'Read more →';
-
-      body.appendChild(title); body.appendChild(summary); body.appendChild(readmore);
-      card.appendChild(body);
-
-      card.addEventListener('click', () => openModal(p));
-      card.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') openModal(p); });
-      container.appendChild(card);
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  cards.forEach(card => {
+    const p = projects[Number(card.dataset.index)];
+    if(!p) return;
+    card.addEventListener('click', () => openModal(p));
+    card.addEventListener('keydown', e => {
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openModal(p); }
     });
-  } catch(err){
-    const container = document.getElementById('projects-grid');
-    if(container) container.innerHTML = '<p class="muted">Unable to load projects — check console.</p>';
-    console.error(err);
-  }
+    const img = card.querySelector('.card-thumb img');
+    if(img && !reduceMotion && p.images && p.images.length > 1){
+      let idx = 0;
+      setInterval(() => { idx = (idx + 1) % p.images.length; img.src = p.images[idx]; }, 2200);
+    }
+  });
 }
 
-document.addEventListener('DOMContentLoaded', loadProjects);
+document.addEventListener('DOMContentLoaded', initProjects);
