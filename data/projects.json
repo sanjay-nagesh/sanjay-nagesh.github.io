@@ -25,7 +25,11 @@
     "details": "Delta is \"Git for hardware,\" built by a team of four at DubHacks 2026. I worked on the electronics and integration.\n\nAn overhead camera watches the workbench. A vision-language model running on a Jetson Orin Nano tracks what changed between snapshots and stores those changes as structured diffs, like commits for a physical prototype.\n\nFrom there you can rewind to an earlier state, ask questions in plain English (\"when did the motor driver get moved?\"), see who made each change, and generate build instructions automatically.\n\nIt won 2nd place in the Perceptron AI Perception track.",
     "tech": "Jetson Orin Nano, Camera, Vision-Language Model (Perceptron)",
     "link": "https://github.com/sanjay-nagesh",
-    "images": []
+    "images": [
+      "assets/delta/1795565869677_image.png",
+      "assets/delta/1795565874719_image.png",
+      "assets/delta/1795565881556_image.png"
+    ]
   },
   {
     "title": "Vaakya: Wearable Real-Time Captioning",
