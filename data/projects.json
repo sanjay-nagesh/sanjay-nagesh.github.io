@@ -95,5 +95,14 @@
     "link": "https://github.com/huskyroboticsteam/CommsBoard",
     "linkText": "View Repo",
     "images": []
+  },
+  {
+    "title": "RISC-V CPU (RV32I) · In progress",
+    "spec": "RISC-V · SystemVerilog · Verilator",
+    "summary": "Designing a RISC-V (RV32I) CPU in SystemVerilog and verifying it in simulation with Verilator and GTKWave.",
+    "details": "This project is in progress. More details coming soon.",
+    "tech": "SystemVerilog, RISC-V (RV32I), Verilator, GTKWave",
+    "link": "",
+    "images": []
   }
 ]
