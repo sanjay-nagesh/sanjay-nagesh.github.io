@@ -46,7 +46,7 @@ a:hover{text-decoration:underline}
 .hero h1{
   margin:0 0 14px;font-size:clamp(2.1rem,6vw,2.9rem);font-weight:600;line-height:1.15;
 }
-.tagline{font-family:var(--font-mono);color:var(--muted);margin:0 0 14px;font-size:0.85rem}
+.tagline{font-family:var(--font-mono);color:var(--fg);font-weight:700;margin:0 0 14px;font-size:1rem}
 .lead{margin:0 0 14px;font-size:1.02rem;max-width:620px}
 .status{margin:0 0 22px;font-size:1.02rem;font-style:italic;color:var(--fg)}
 .cta-row{display:flex;gap:20px;flex-wrap:wrap;margin:0}
@@ -102,6 +102,7 @@ section > p{max-width:660px;margin:0 0 14px}
 .card-body{padding:14px 16px 16px;display:flex;flex-direction:column;flex:1}
 .card-body h3{margin:0 0 8px;font-size:1.05rem;line-height:1.35}
 .card-body .muted{font-size:0.88rem;margin:0 0 12px;line-height:1.6;flex:1}
+.wip-badge{display:inline-block;font-family:var(--font-mono);font-size:0.65rem;font-weight:500;color:var(--accent);border:1px solid var(--accent);border-radius:3px;padding:1px 6px;vertical-align:middle;margin-left:4px}
 .card-readmore{font-family:var(--font-mono);font-size:0.75rem;color:var(--accent)}
 
 /* AWARDS */
